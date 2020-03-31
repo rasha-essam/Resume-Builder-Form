@@ -1,0 +1,210 @@
+<div class="card">
+  <h5 class="card-header">
+    Build Your Résumé
+  </h5>
+
+  <div class="card-body">
+    <form novalidate (ngSubmit)="save()" [formGroup]="resumeBuilderForm">
+      <div class="form-row">
+        <div class="form-group col-md-5">
+          <label for="firstNameId">First Name</label>
+          <input
+            class="form-control"
+            id="firstNameId"
+            type="text"
+            placeholder="First Name"
+            formControlName="firstName"
+            [ngClass]="{
+              'is-invalid':
+                (resumeBuilderForm.get('firstName').touched ||
+                  resumeBuilderForm.get('firstName').dirty) &&
+                !resumeBuilderForm.get('firstName').valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="resumeBuilderForm.get('firstName').errors?.required">
+              Please enter your first name.
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group col-md-5">
+          <label for="lastNameId">Last Name</label>
+          <input
+            class="form-control"
+            id="lastNameId"
+            type="text"
+            placeholder="Last Name"
+            formControlName="lastName"
+            [ngClass]="{
+              'is-invalid':
+                (resumeBuilderForm.get('lastName').touched ||
+                  resumeBuilderForm.get('lastName').dirty) &&
+                !resumeBuilderForm.get('lastName').valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="resumeBuilderForm.get('lastName').errors?.required">
+              Please enter your last name.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <label for="emailId">Email</label>
+          <input
+            class="form-control"
+            id="emailId"
+            type="email"
+            placeholder="Email"
+            formControlName="email"
+            [ngClass]="{
+              'is-invalid':
+                (resumeBuilderForm.get('email').touched ||
+                  resumeBuilderForm.get('email').dirty) &&
+                !resumeBuilderForm.get('email').valid
+            }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="resumeBuilderForm.get('email').errors?.required">
+              Please enter your email.
+            </span>
+            <span *ngIf="resumeBuilderForm.get('email').errors?.email">
+              Please enter right email format.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group col-md-10">
+          <label for="phoneId">Phone</label>
+          <input
+            class="form-control"
+            id="phoneId"
+            type="tel"
+            placeholder="Phone"
+            formControlName="phone"
+            [ngClass]="{ 'is-invalid': !resumeBuilderForm.get('phone').valid }"
+          />
+          <span class="invalid-feedback">
+            <span *ngIf="resumeBuilderForm.get('phone').errors?.required">
+              Please enter your phone number.
+            </span>
+          </span>
+        </div>
+      </div>
+
+      <br />
+      <div class="flexContainer">
+        <h5>Experience</h5>
+        <svg (click)="addExperience()">
+          <use xlink:href="./../../assets/img/svg/icons.svg#icon-add"></use>
+        </svg>
+      </div>
+      <div
+        formArrayName="experienceBlocks"
+        *ngFor="let experience of experienceBlocks.controls; let i = index"
+      >
+        <div
+          [ngClass]="{
+            'experience-block': experienceBlocks.controls.length > 1
+          }"
+          [formGroupName]="i"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label attr.for="{{ 'titleId' + i }}">Title</label>
+              <input
+                class="form-control"
+                id="{{ 'titleId' + i }}"
+                type="text"
+                placeholder="Ex: Software Engineer"
+                formControlName="title"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label attr.for="{{ 'companyId' + i }}">Company</label>
+              <input
+                class="form-control"
+                id="{{ 'companyId' + i }}"
+                type="text"
+                placeholder="Ex: Microsoft"
+                formControlName="company"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label attr.for="{{ 'locationId' + i }}">Location</label>
+              <input
+                class="form-control"
+                id="{{ 'locationId' + i }}"
+                type="text"
+                placeholder="Ex: London, United Kingdom"
+                formControlName="location"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-5">
+              <label attr.for="{{ 'startDateId' + i }}">Start Date</label>
+              <input
+                class="form-control"
+                id="{{ 'startDateId' + i }}"
+                type="date"
+                placeholder=""
+                formControlName="startDate"
+              />
+            </div>
+            <div class="form-group col-md-5">
+              <label attr.for="{{ 'endDateId' + i }}">End Date</label>
+              <input
+                class="form-control"
+                id="{{ 'endDateId' + i }}"
+                type="date"
+                placeholder="End Date"
+                formControlName="endDate"
+              />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-10">
+              <label attr.for="{{ 'descId' + i }}">Description</label>
+              <textarea
+                class="form-control"
+                rows="5"
+                id="{{ 'descId' + i }}"
+                type="text"
+                placeholder="Description"
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+          <hr *ngIf="i !== experienceBlocks.controls.length - 1" />
+        </div>
+      </div>
+      <button
+        class="btn btn-primary"
+        type="submit"
+        style="width:100px"
+        [title]="
+          resumeBuilderForm.valid
+            ? 'Save your entered data'
+            : 'Disabled until the form data is valid'
+        "
+        [disabled]="!resumeBuilderForm.valid"
+      >
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
