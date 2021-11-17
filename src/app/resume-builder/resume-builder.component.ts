@@ -43,4 +43,8 @@ export class ResumeBuilderComponent implements OnInit {
   addExperience() {
     this.experienceBlocks.insert(0, this.buildExperienceBlock());
   }
+
+  removeExperience(){
+    this.experienceBlocks.removeAt(0);
+  }
 }

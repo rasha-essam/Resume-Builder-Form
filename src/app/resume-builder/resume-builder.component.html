@@ -100,9 +100,14 @@
       <br />
       <div class="flexContainer">
         <h5>Experience</h5>
-        <svg (click)="addExperience()">
-          <use xlink:href="./../../assets/img/svg/icons.svg#icon-add"></use>
-        </svg>
+        <div>
+          <svg (click)="addExperience()">
+            <use xlink:href="./../../assets/img/svg/icons.svg#icon-add"></use>
+          </svg>
+          <svg (click)="removeExperience()">
+            <use xlink:href="./../../assets/img/svg/icons.svg#icon-remove"></use>
+          </svg>
+        </div>        
       </div>
       <div
         formArrayName="experienceBlocks"
